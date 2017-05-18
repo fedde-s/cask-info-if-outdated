@@ -3,7 +3,7 @@
 function check_stanza () {
   stanza=`brew cask info "$1"`
   version=`echo "$stanza" | head -1 | sed -e "s/.*: //"`
-  if ! echo "$stanza" | grep Caskroom | grep "/$1/$version[/ ]" >/dev/null; then
+  if ! echo "$stanza" | sed -e '1,2d' -e '/^From: /,$d' | grep "/$1/$version[/ ]" >/dev/null; then
     echo
     echo "$stanza"
   else
